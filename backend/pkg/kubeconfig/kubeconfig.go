@@ -8,6 +8,7 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 
@@ -46,6 +47,7 @@ type Context struct {
 	Internal    bool                   `json:"internal"`
 	Error       string                 `json:"error"`
 	PathName    string                 `json:"pathName"`
+	PathID    string                 `json:"pathID"`
 }
 
 type OidcConfig struct {
@@ -353,7 +355,16 @@ func LoadContextsFromFile(kubeConfigPath string, source int) ([]Context, []Conte
 
 	// add the PathName to each context
 	for i := range contexts {
-		contexts[i].PathName = kubeConfigPath
+		pathName := kubeConfigPath
+		
+		contexts[i].PathName = pathName
+
+		// find the file name from the kubeconfig path
+		fileName := filepath.Base(pathName)
+
+		// create the pathID string using a pipe as the delimiter
+		pathID := fmt.Sprintf("%s:%s:%s", pathName, fileName, contexts[i].Name)
+		contexts[i].PathID = pathID
 	}
 
 	return contexts, contextErrors, nil

@@ -86,6 +86,7 @@ func (c *contextStore) GetContext(name string) (*Context, error) {
 	return context, nil
 }
 
+// MOON - 6. CHANGE THE NAME PARAM TO THE PATH ID PARAM
 // RemoveContext removes a context from the store.
 func (c *contextStore) RemoveContext(name string) error {
 	return c.cache.Delete(context.Background(), name)

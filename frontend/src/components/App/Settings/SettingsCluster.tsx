@@ -18,7 +18,10 @@ import helpers, { ClusterSettings } from '../../../helpers';
 import { useCluster, useClustersConf } from '../../../lib/k8s';
 import { deleteCluster, parseKubeConfig, renameCluster } from '../../../lib/k8s/apiProxy';
 import { setConfig, setStatelessConfig } from '../../../redux/configSlice';
-import { findKubeconfigByClusterName, updateStatelessClusterKubeconfig } from '../../../stateless/';
+import {
+  findKubeconfigByClusterName,
+  updateStatelessClusterKubeconfig,
+} from '../../../stateless/';
 import { Link, Loader, NameValueTable, SectionBox } from '../../common';
 import ConfirmButton from '../../common/ConfirmButton';
 import Empty from '../../common/EmptyContent';
@@ -98,10 +101,13 @@ export default function SettingsCluster() {
 
   const clusterInfo = (clusterConf && clusterConf[cluster || '']) || null;
   const source = clusterInfo?.meta_data?.source || '';
+  const pathID = clusterInfo?.meta_data?.pathID || '';
+
+  console.log('cluster conf: ', clusterConf);
 
   const handleUpdateClusterName = (source: string) => {
     try {
-      renameCluster(cluster || '', newClusterName, source)
+      renameCluster(pathID, cluster || '', newClusterName, source)
         .then(async config => {
           if (cluster) {
             const kubeconfig = await findKubeconfigByClusterName(cluster);

@@ -13,6 +13,8 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 )
 
+// MOON - 3. SINCE THIS USES THE CONTEXT NAME WE MAY NEED TO CHANGE IT TO THE CONTEXT PATH ID
+// MOON - 4. WE WILL NEED TO CHANGE THE TESTS LATER
 // MarshalCustomObject marshals the runtime.Unknown object into a CustomObject.
 func MarshalCustomObject(info runtime.Object, contextName string) (kubeconfig.CustomObject, error) {
 	// Convert the runtime.Unknown object to a byte slice

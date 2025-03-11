@@ -4,6 +4,7 @@ import store from '../../../../redux/stores/store';
 import {
   deleteClusterKubeconfig,
   findKubeconfigByClusterName,
+  findKubeconfigByClusterPathID,
   storeStatelessClusterKubeconfig,
 } from '../../../../stateless';
 import { getCluster, getClusterGroup } from '../../../util';
@@ -135,17 +136,23 @@ export function getClusterDefaultNamespace(cluster: string, checkSettings?: bool
  * is the custom name of the cluster used by the user.
  * @param cluster
  */
-export async function renameCluster(cluster: string, newClusterName: string, source: string) {
+export async function renameCluster(
+  pathID: string,
+  cluster: string,
+  newClusterName: string,
+  source: string
+) {
   let stateless = false;
   if (cluster) {
-    const kubeconfig = await findKubeconfigByClusterName(cluster);
+    const kubeconfig = await findKubeconfigByClusterPathID(pathID);
+    // const kubeconfig = await findKubeconfigByClusterName(cluster);
     if (kubeconfig !== null) {
       stateless = true;
     }
   }
 
   return request(
-    `/cluster/${cluster}`,
+    `/cluster/${cluster}?clusterPathID=${pathID}`,
     {
       method: 'PUT',
       headers: { ...getHeadlampAPIHeaders() },
