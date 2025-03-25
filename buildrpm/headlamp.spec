@@ -22,22 +22,12 @@ Source:         %{name}-%{version}.tar.bz2
 BuildRequires:  golang
 BuildRequires:	nodejs >= 18.14
 BuildRequires:	make
-Patch0:         AppLogo.tsx.patch
-Patch1:         Auth.tsx.patch
-Patch5:         make-env.js.patch
-Patch7:        package.json.patch
-Patch8:        themes.ts.patch
 
 %description
 Headlamp is an easy-to-use and extensible Kubernetes web UI.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0
-%patch1
-%patch5
-%patch7
-%patch8
 
 %build
 cp olm/resources/*.svg frontend/src/resources
@@ -45,9 +35,6 @@ cp olm/icons/favicon.ico frontend/public/favicon.ico
 cp olm/icons/favicon-16x16.png frontend/public/favicon-16x16.png
 cp olm/icons/favicon-32x32.png frontend/public/favicon-32x32.png
 cp olm/icons/favicon.ico frontend/public/icons.ico
-cd backend
-go mod tidy
-cd ..
 make backend frontend
 
 %install
