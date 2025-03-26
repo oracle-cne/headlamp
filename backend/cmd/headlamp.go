@@ -61,6 +61,8 @@ type HeadlampConfig struct {
 	cache                 cache.Cache[interface{}]
 	kubeConfigStore       kubeconfig.ContextStore
 	multiplexer           *Multiplexer
+	tlsCert               string
+	tlsKey                string
 }
 
 const DrainNodeCacheTTL = 20 // seconds
@@ -937,7 +939,12 @@ func StartHeadlampServer(config *HeadlampConfig) {
 	addr := fmt.Sprintf("%s:%d", config.listenAddr, config.port)
 
 	// Start server
-	err := http.ListenAndServe(addr, handler) //nolint:gosec
+	var err error
+	if config.tlsCert != "" && config.tlsKey != "" {
+		err = http.ListenAndServeTLS(addr, config.tlsCert, config.tlsKey, handler) //nolint:gosec
+	} else {
+		err = http.ListenAndServe(addr, handler) //nolint:gosec
+	}
 	if err != nil {
 		logger.Log(logger.LevelError, nil, err, "Failed to start server")
 		os.Exit(1)
