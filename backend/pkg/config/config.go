@@ -36,6 +36,8 @@ type Config struct {
 	OidcClientSecret      string `koanf:"oidc-client-secret"`
 	OidcIdpIssuerURL      string `koanf:"oidc-idp-issuer-url"`
 	OidcScopes            string `koanf:"oidc-scopes"`
+	TLSCert               string `koanf:"tls-cert"`
+	TLSKey                string `koanf:"tls-key"`
 }
 
 func (c *Config) Validate() error {
@@ -169,6 +171,11 @@ func flagset() *flag.FlagSet {
 	f.String("oidc-idp-issuer-url", "", "Identity provider issuer URL for OIDC")
 	f.String("oidc-scopes", "profile,email",
 		"A comma separated list of scopes needed from the OIDC provider")
+
+	f.String("tls-cert", "", "Certificate for serving TLS")
+	f.String("tls-key", "", "Key for serving TLS")
+
+
 
 	return f
 }

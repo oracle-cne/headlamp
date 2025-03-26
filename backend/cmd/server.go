@@ -56,5 +56,7 @@ func main() {
 		cache:                 cache,
 		kubeConfigStore:       kubeConfigStore,
 		multiplexer:           multiplexer,
+		tlsCert:               conf.TLSCert,
+		tlsKey:                conf.TLSKey,
 	})
 }
