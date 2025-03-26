@@ -32,6 +32,7 @@ import (
 	"github.com/headlamp-k8s/headlamp/backend/pkg/logger"
 	"github.com/headlamp-k8s/headlamp/backend/pkg/plugins"
 	"github.com/headlamp-k8s/headlamp/backend/pkg/portforward"
+	"github.com/headlamp-k8s/headlamp/backend/pkg/serviceproxy"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
@@ -290,7 +291,7 @@ func addPluginRoutes(config *HeadlampConfig, r *mux.Router) {
 	// This is only available when running locally.
 	if !config.useInCluster {
 		r.HandleFunc("/plugins/{name}", func(w http.ResponseWriter, r *http.Request) {
-			if err := checkHeadlampBackendToken(w, r); err != nil {
+			if err := config.checkHeadlampBackendToken(w, r); err != nil {
 				return
 			}
 			pluginName := mux.Vars(r)["name"]
@@ -973,7 +974,11 @@ func getHelmHandler(c *HeadlampConfig, w http.ResponseWriter, r *http.Request) (
 // Check request for header "X-HEADLAMP_BACKEND-TOKEN" matches HEADLAMP_BACKEND_TOKEN env
 // This check is to prevent access except for from the app.
 // The app sets HEADLAMP_BACKEND_TOKEN, and gives the token to the frontend.
-func checkHeadlampBackendToken(w http.ResponseWriter, r *http.Request) error {
+func (c *HeadlampConfig)  checkHeadlampBackendToken(w http.ResponseWriter, r *http.Request) error {
+	if c.useInCluster {
+		return nil
+	}
+
 	backendToken := r.Header.Get("X-HEADLAMP_BACKEND-TOKEN")
 	backendTokenEnv := os.Getenv("HEADLAMP_BACKEND_TOKEN")
 
@@ -985,10 +990,20 @@ func checkHeadlampBackendToken(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
+// handleClusterServiceProxy registers a new route for the path serviceproxy/{namespace}/{name}
+// to proxy requests to in-cluster services.
+func handleClusterServiceProxy(c *HeadlampConfig, router *mux.Router) {
+	router.HandleFunc("/clusters/{clusterName}/serviceproxy/{namespace}/{name}",
+		func(w http.ResponseWriter, r *http.Request) {
+			serviceproxy.RequestHandler(c.kubeConfigStore, w, r)
+		}).Queries("request", "{request}")
+}
+
+
 //nolint:gocognit,funlen
 func handleClusterHelm(c *HeadlampConfig, router *mux.Router) {
 	router.PathPrefix("/clusters/{clusterName}/helm/{.*}").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if err := checkHeadlampBackendToken(w, r); err != nil {
+		if err := c.checkHeadlampBackendToken(w, r); err != nil {
 			logger.Log(logger.LevelError, nil, err, "failed to check headlamp backend token")
 
 			return
@@ -1137,6 +1152,7 @@ func (c *HeadlampConfig) handleClusterRequests(router *mux.Router) {
 		handleClusterHelm(c, router)
 	}
 
+	handleClusterServiceProxy(c, router)
 	handleClusterAPI(c, router)
 }
 
@@ -1290,7 +1306,7 @@ func (c *HeadlampConfig) getConfig(w http.ResponseWriter, r *http.Request) {
 
 // addCluster adds cluster to store and updates the kubeconfig file.
 func (c *HeadlampConfig) addCluster(w http.ResponseWriter, r *http.Request) {
-	if err := checkHeadlampBackendToken(w, r); err != nil {
+	if err := c.checkHeadlampBackendToken(w, r); err != nil {
 		logger.Log(logger.LevelError, nil, err, "invalid token")
 		return
 	}
@@ -1433,7 +1449,7 @@ func (c *HeadlampConfig) addContextsToStore(contexts []kubeconfig.Context, setup
 
 // deleteCluster deletes the cluster from the store and updates the kubeconfig file.
 func (c *HeadlampConfig) deleteCluster(w http.ResponseWriter, r *http.Request) {
-	if err := checkHeadlampBackendToken(w, r); err != nil {
+	if err := c.checkHeadlampBackendToken(w, r); err != nil {
 		logger.Log(logger.LevelError, nil, err, "invalid token")
 
 		return
