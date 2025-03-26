@@ -17,7 +17,7 @@ RUN microdnf update -y && \
     useradd --system --uid 100 -g headlamp --create-home --home-dir /home/headlamp headlamp && \
     chown -R headlamp:headlamp /headlamp
 
-ENV HEADLAMP_CONFIG_TLS_CERT=/headlamp-cert/headlamp-tls.crt
+ENV HEADLAMP_CONFIG_TLS_CERT=/headlamp-cert/headlamp-ca.crt
 ENV HEADLAMP_CONFIG_TLS_KEY=/headlamp-cert/headlamp-tls.key
 USER headlamp
 
