@@ -237,6 +237,12 @@ spec:
             {{- with .Values.config.extraArgs }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
+            {{- with .Values.config.tlsCert }}
+            - "-tls-cert={{ . }}"
+            {{- end }}
+            {{- with .Values.config.tlsKey }}
+            - "-tls-key={{ . }}"
+            {{- end }}
           ports:
             - name: https
               containerPort: 4466
