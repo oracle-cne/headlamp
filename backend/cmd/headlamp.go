@@ -93,6 +93,8 @@ type HeadlampConfig struct {
 	metrics                   *telemetry.Metrics
 	telemetryConfig           cfg.Config
 	telemetryHandler          *telemetry.RequestHandler
+	tlsCert                   string
+	tlsKey                    string
 }
 
 const DrainNodeCacheTTL = 20 // seconds
@@ -1207,7 +1209,14 @@ func StartHeadlampServer(config *HeadlampConfig) {
 	addr := fmt.Sprintf("%s:%d", config.listenAddr, config.port)
 
 	// Start server
-	if err := http.ListenAndServe(addr, handler); err != nil { //nolint:gosec
+	var err error
+	if config.useInCluster {
+		//nolint:gosec
+		err = http.ListenAndServeTLS(addr, config.tlsCert, config.tlsKey, handler)
+	} else {
+		err = http.ListenAndServe(addr, handler) //nolint:gosec
+	}
+	if err != nil { //nolint:gosec
 		logger.Log(logger.LevelError, nil, err, "Failed to start server")
 		return
 	}
