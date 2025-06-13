@@ -5,7 +5,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/headlamp-sigs/headlamp/backend/pkg/logger"
+	"github.com/kubernetes-sigs/headlamp/backend/pkg/logger"
 )
 
 func HTTPGet(uri string) ([]byte, error) {
