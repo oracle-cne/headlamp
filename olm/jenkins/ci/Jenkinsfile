@@ -1,0 +1,21 @@
+@Library('olcne-pipeline') _
+import com.oracle.olcne.pipeline.BranchPattern
+
+String version = '0.31.1'
+String imgTag  = "v" + version
+
+olcnePipeline(
+        branchPattern: new BranchPattern(master: 'oracle/release/.*', feature: '(?!^oracle/release/$)(^.*$)'),
+        containers: [('container-registry.oracle.com/olcne/ui:' + imgTag): 'olcne/ui:' + imgTag],
+        golang: '1.24.1',
+        platforms: ['ol8'],
+        architectures: ['x86_64', 'aarch64'],
+        publishImage: false,
+        yumOL8Repos: ['ol8_appstream'],
+        ol8ModulesToDisable: ['go-toolset:ol8'],
+        ol8ModulesToEnable: ['nodejs:20'],
+	preBuildCommands: [
+		'podman pull container-registry.oracle.com/olcne/base:latest',
+		'podman tag container-registry.oracle.com/olcne/base:latest container-registry.oracle.com/os/oraclelinux:8',
+	],
+)

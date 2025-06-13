@@ -1,0 +1,22 @@
+diff --git frontend/src/components/App/AppLogo.tsx frontend/src/components/App/AppLogo.tsx
+index 37233802..8aa4f40f 100644
+--- frontend/src/components/App/AppLogo.tsx
++++ frontend/src/components/App/AppLogo.tsx
+@@ -40,7 +40,7 @@ export default function OriginalAppLogo(props: AppLogoProps) {
+       ? LogoLight
+       : LogoDark;
+ 
+-  return <Component style={{ width: 'auto', height: '32px' }} />;
++  return <Component style={{ width: '243px', height: '66px', marginLeft: '-27px'}} />;
+ }
+ 
+ export function AppLogo(props: AppLogoProps) {
+@@ -64,7 +64,7 @@ export function AppLogo(props: AppLogoProps) {
+         <PluginAppLogoComp
+           logoType={logoType}
+           themeName={themeName}
+-          sx={{ height: '32px', width: 'auto' }}
++          sx={{ height: '66px', width: '243px' }}
+         />
+       )}
+     </ErrorBoundary>

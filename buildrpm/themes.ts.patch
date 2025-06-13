@@ -1,0 +1,31 @@
+diff --git frontend/src/lib/themes.ts frontend/src/lib/themes.ts
+index 0ec8cd5e5..8a2b430bd 100644
+--- frontend/src/lib/themes.ts
++++ frontend/src/lib/themes.ts
+@@ -152,7 +152,7 @@ export function createMuiTheme(currentTheme: AppTheme) {
+       normalEventBg: '#F0F0F0',
+       chartStyles: {
+         defaultFillColor: grey['300'],
+-        labelColor: '#000',
++        labelColor: '#fff',
+       },
+       metadataBgColor: '#f3f2f1',
+       headerStyle: {
+@@ -191,7 +191,7 @@ export function createMuiTheme(currentTheme: AppTheme) {
+       },
+     },
+     typography: {
+-      fontFamily: ['Overpass', 'sans-serif'].join(', '),
++      fontFamily: ['Oracle Sans', 'sans-serif'].join(', '),
+       h1: {
+         fontWeight: 700,
+         fontSize: '1.87rem',
+@@ -329,7 +329,7 @@ export function createMuiTheme(currentTheme: AppTheme) {
+         normalEventBg: '#333333',
+         metadataBgColor: '#333',
+         resourceToolTip: {
+-          color: 'rgba(255, 255, 255, 0.87)',
++          color: '#fff',
+         },
+         clusterChooser: {
+           button: {
