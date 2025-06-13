@@ -23,6 +23,7 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/schema"
 	"github.com/kubernetes-sigs/headlamp/backend/pkg/logger"
 
