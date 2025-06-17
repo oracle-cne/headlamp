@@ -44,7 +44,7 @@ index 0ec8cd5e5..10c5ac08b 100644
 +        background: '#2b2926',
 +        color: '#aea8a2',
 +        selectedBackground: '#d8372a',
-+        selectedColor: '#000',
++        selectedColor: '#8a8784',
          actionBackground: currentTheme.sidebar?.actionBackground ?? '#333',
        },
        navbar: {
