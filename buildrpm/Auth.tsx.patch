@@ -1,5 +1,5 @@
 diff --git frontend/src/components/account/Auth.tsx frontend/src/components/account/Auth.tsx
-index 729a11e3e..18ef6ad1f 100644
+index 729a11e3e..d04870bd5 100644
 --- frontend/src/components/account/Auth.tsx
 +++ frontend/src/components/account/Auth.tsx
 @@ -33,6 +33,7 @@ import { ApiError, testAuth } from '../../lib/k8s/apiProxy';
@@ -10,23 +10,22 @@ index 729a11e3e..18ef6ad1f 100644
  
  export default function AuthToken() {
    const history = useHistory();
-@@ -125,6 +126,15 @@ export function PureAuthToken({
+@@ -125,6 +126,14 @@ export function PureAuthToken({
    }
  
    return (
 +    <>
-+      <GlobalStyles styles={{
-+        '.MuiDialog-paper > h2.MuiDialogTitle-root': {
-+        backgroundColor: 'black',
-+        color: 'white', // Optional for contrast
++    <GlobalStyles
++      styles={{
++        '.MuiDialog-container .MuiDialog-paper h2#authtoken-dialog-title.MuiDialogTitle-root': {
++          backgroundColor: 'black !important',
 +        },
 +      }}
 +    />
-+
      <Box component="main">
        <ClusterDialog useCover onClose={onClose} aria-labelledby="authtoken-dialog-title">
          <DialogTitle id="authtoken-dialog-title">{title}</DialogTitle>
-@@ -196,6 +206,7 @@ export function PureAuthToken({
+@@ -196,6 +205,7 @@ export function PureAuthToken({
          message={<span id="message-id">{t('translation|Error authenticating')}</span>}
        />
      </Box>
