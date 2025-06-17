@@ -1,7 +1,7 @@
-diff --git a/frontend/src/components/App/AppLogo.tsx b/frontend/src/components/App/AppLogo.tsx
+diff --git frontend/src/components/App/AppLogo.tsx frontend/src/components/App/AppLogo.tsx
 index e90633a15..104ee2e76 100644
---- a/frontend/src/components/App/AppLogo.tsx
-+++ b/frontend/src/components/App/AppLogo.tsx
+--- frontend/src/components/App/AppLogo.tsx
++++ frontend/src/components/App/AppLogo.tsx
 @@ -47,16 +47,9 @@ export type AppLogoType =
  export default function OriginalAppLogo(props: AppLogoProps) {
    const { logoType, themeName } = props;
