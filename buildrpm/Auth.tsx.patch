@@ -18,7 +18,7 @@ index 729a11e3e..d04870bd5 100644
 +    <GlobalStyles
 +      styles={{
 +        '.MuiDialog-container .MuiDialog-paper > h2#authtoken-dialog-title.MuiDialogTitle-root': {
-+          backgroundColor: 'black !important',
++          backgroundColor: '#2c2926 !important',
 +        },
 +      }}
 +    />

@@ -1,32 +1,22 @@
-diff --git frontend/src/components/App/AppLogo.tsx frontend/src/components/App/AppLogo.tsx
-index e90633a15..104ee2e76 100644
---- frontend/src/components/App/AppLogo.tsx
-+++ frontend/src/components/App/AppLogo.tsx
-@@ -47,16 +47,9 @@ export type AppLogoType =
- export default function OriginalAppLogo(props: AppLogoProps) {
-   const { logoType, themeName } = props;
- 
--  const Component =
--    logoType === 'large'
--      ? themeName === 'dark'
--        ? LogoWithTextLight
--        : LogoWithTextDark
--      : themeName === 'dark'
--      ? LogoLight
--      : LogoDark;
-+  const Component = logoType === 'large' ? LogoWithTextLight : LogoLight;
+diff --git a/frontend/src/components/App/AppLogo.tsx b/frontend/src/components/App/AppLogo.tsx
+index e90633a15..7c83aac47 100644
+--- a/frontend/src/components/App/AppLogo.tsx
++++ b/frontend/src/components/App/AppLogo.tsx
+@@ -56,7 +56,7 @@ export default function OriginalAppLogo(props: AppLogoProps) {
+       ? LogoLight
+       : LogoDark;
  
 -  return <Component style={{ width: 'auto', height: '32px' }} />;
 +  return <Component style={{ width: '243px', height: '66px', marginLeft: '-27px'}} />;
  }
  
  export function AppLogo(props: AppLogoProps) {
-@@ -81,7 +74,7 @@ export function AppLogo(props: AppLogoProps) {
+@@ -81,7 +81,7 @@ export function AppLogo(props: AppLogoProps) {
          <PluginAppLogoComp
            logoType={logoType}
            themeName={themeName}
 -          sx={{ height: '32px', width: 'auto' }}
-+           sx={{ height: '66px', width: '243px' }}
++          sx={{ height: '66px', width: '243px' }}
          />
        )}
      </ErrorBoundary>
