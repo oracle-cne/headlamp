@@ -14,12 +14,6 @@ Headlamp is an easy-to-use and extensible Kubernetes web UI that provides:
 
 ## Quick Start
 
-Add the Headlamp repository and install the chart:
-
-```console
-$ helm repo add headlamp https://kubernetes-sigs.github.io/headlamp/
-$ helm repo update
-$ helm install my-headlamp headlamp/headlamp --namespace kube-system
 ```
 
 Access Headlamp:
@@ -32,7 +26,7 @@ Then open http://localhost:8080 in your browser.
 
 ### Basic Installation
 ```console
-$ helm install my-headlamp headlamp/headlamp --namespace kube-system
+$ ocne application install --release ui --name ui --namespace ocne-system
 ```
 
 ### Installation with OIDC

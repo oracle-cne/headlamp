@@ -1,7 +1,7 @@
 apiVersion: v2
-name: headlamp
+name: ui
 description: Headlamp is an easy-to-use and extensible Kubernetes web UI.
-icon: https://raw.githubusercontent.com/kubernetes-sigs/headlamp/main/docs/headlamp_light.svg
+icon: icons/oracle.png
 home: https://headlamp.dev/
 type: application
 keywords:
@@ -20,12 +20,9 @@ sources:
 maintainers:
   - name: kinvolk
     url: https://kinvolk.io/
-version: 0.31.0
-appVersion: 0.31.0
+version: 2.1.0
+kubeVersion: ">= 1.0.0"
 annotations:
-  artifacthub.io/signKey: |
-    fingerprint: 2956B7F7167769370C93730C7264DA7B85D08A37
-    url: https://keys.openpgp.org/vks/v1/by-fingerprint/2956B7F7167769370C93730C7264DA7B85D08A37
   artifacthub.io/category: monitoring-logging
   artifacthub.io/license: Apache-2.0
   artifacthub.io/screenshots: |

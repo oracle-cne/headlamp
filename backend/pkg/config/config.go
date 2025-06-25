@@ -51,6 +51,9 @@ type Config struct {
 	UseOTLPHTTP        *bool    `koanf:"use-otlp-http"`
 	StdoutTraceEnabled *bool    `koanf:"stdout-trace-enabled"`
 	SamplingRate       *float64 `koanf:"sampling-rate"`
+	//TLS config
+	TLSCert string `koanf:"tls-cert"`
+	TLSKey  string `koanf:"tls-key"`
 }
 
 func (c *Config) Validate() error {
@@ -200,6 +203,7 @@ func flagset() *flag.FlagSet {
 	f.Bool("dev", false, "Allow connections from other origins")
 	f.Bool("insecure-ssl", false, "Accept/Ignore all server SSL certificates")
 	f.Bool("enable-dynamic-clusters", false, "Enable dynamic clusters, which stores stateless clusters in the frontend.")
+	f.Bool("enable-helm", false, "Enable Helm operations")
 	// Note: When running in-cluster and if not explicitly set, this flag defaults to false.
 	f.Bool("watch-plugins-changes", true, "Reloads plugins when there are changes to them or their directory")
 
@@ -229,6 +233,10 @@ func flagset() *flag.FlagSet {
 	f.Bool("use-otlp-http", false, "Use HTTP instead of gRPC for OTLP export")
 	f.Bool("stdout-trace-enabled", false, "Enable tracing output to stdout")
 	f.Float64("sampling-rate", 1.0, "Sampling rate for traces")
+
+	//TLS flags
+	f.String("tls-cert", "", "Certificate for serving TLS")
+	f.String("tls-key", "", "Key for serving TLS")
 
 	return f
 }
