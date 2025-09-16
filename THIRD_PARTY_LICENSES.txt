@@ -191,7 +191,7 @@ github.com/containerd/errdefs
 SPDX:Apache-2.0
 
 == Copyright
-Copyright The containerd Authors
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -202,7 +202,7 @@ github.com/containerd/log
 SPDX:Apache-2.0
 
 == Copyright
-Copyright The containerd Authors
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -213,7 +213,7 @@ github.com/containerd/platforms
 SPDX:Apache-2.0
 
 == Copyright
-Copyright The containerd Authors
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -287,7 +287,7 @@ github.com/distribution/reference
 SPDX:Apache-2.0
 
 == Copyright
-Copyright The containerd Authors.
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -406,7 +406,7 @@ SPDX:Apache-2.0
 == Copyright
 Copyright 2012-2015 Docker, Inc.
 Copyright 2013-2016 Docker, Inc.
-Copyright Â© 2016 Docker, Inc. All rights reserved, except as follows. Code is released under the Apache 2.0 license. The README.md file, and files in the "docs" folder are licensed under the Creative Commons Attribution 4.0 International License under the terms and conditions set forth in the file "LICENSE.docs". You may obtain a duplicate copy of the same license, titled CC-BY-SA-4.0, at http://creativecommons.org/licenses/by/4.0/.
+Copyright © 2016 Docker, Inc. All rights reserved, except as follows. Code is released under the Apache 2.0 license. The README.md file, and files in the "docs" folder are licensed under the Creative Commons Attribution 4.0 International License under the terms and conditions set forth in the file "LICENSE.docs". You may obtain a duplicate copy of the same license, titled CC-BY-SA-4.0, at http://creativecommons.org/licenses/by/4.0/.
 
 == Notices
 Docker
@@ -512,7 +512,7 @@ github.com/felixge/httpsnoop
 SPDX:MIT
 
 == Copyright
-Copyright (c) 2016 Felix GeisendÃ¶rfer (felix@debuggable.com)
+Copyright (c) 2016 Felix Geisendörfer (felix@debuggable.com)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -523,8 +523,8 @@ github.com/fsnotify/fsnotify
 SPDX:BSD-3-Clause--modified-by-Google
 
 == Copyright
-Copyright Â© 2012 The Go Authors. All rights reserved.
-Copyright Â© fsnotify Authors. All rights reserved.
+Copyright © 2012 The Go Authors. All rights reserved.
+Copyright © fsnotify Authors. All rights reserved.
 
 --------------------------------- (separator) ----------------------------------
 
@@ -936,7 +936,7 @@ github.com/gregjones/httpcache
 SPDX:MIT
 
 == Copyright
-Copyright Â© 2012 Greg Jones (greg.jones@gmail.com)
+Copyright © 2012 Greg Jones (greg.jones@gmail.com)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -947,7 +947,7 @@ github.com/hashicorp/errwrap
 SPDX:MPL-2.0
 
 == Copyright
-Copyright (c) 2014 HashiCorp, Inc.
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -958,7 +958,7 @@ github.com/hashicorp/go-multierror
 SPDX:MPL-2.0
 
 == Copyright
-Copyright (c) 2014 HashiCorp, Inc.
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -982,10 +982,10 @@ SPDX:BSD-3-Clause--modified-by-Google
 
 == Copyright
 Copyright (c) 2012 The Go Authors. All rights reserved.
-Copyright (c) 2013 Dario CastaÃ±Ã©. All rights reserved.
+Copyright (c) 2013 Dario Castañé. All rights reserved.
 Copyright 2009 The Go Authors. All rights reserved.
-Copyright 2013 Dario CastaÃ±Ã©. All rights reserved.
-Copyright 2014 Dario CastaÃ±Ã©. All rights reserved.
+Copyright 2013 Dario Castañé. All rights reserved.
+Copyright 2014 Dario Castañé. All rights reserved.
 
 --------------------------------- (separator) ----------------------------------
 
@@ -1595,9 +1595,7 @@ github.com/modern-go/concurrent
 SPDX:Apache-2.0
 
 == Copyright
-Copyright 2018 GitHub noreply@github.com
-Copyright 2018 Tao Wen taowen@gmail.com
-Copyright 2018 kr1sten0 zhqy0807@gmail.com
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -1608,16 +1606,7 @@ github.com/modern-go/reflect2
 SPDX:Apache-2.0
 
 == Copyright
-Copyright 2018 GitHub noreply@github.com
-Copyright 2018 Justin Santa Barbara justinsb@google.com
-Copyright 2018 Tao Wen taowen@gmail.com
-Copyright 2018 nextzhou nextzhou@gmail.com
-Copyright 2020 Aaron Simmons paleozogt@gmail.com
-Copyright 2020 GitHub noreply@github.com
-Copyright 2020 Mikko Ylinen mikko.ylinen@intel.com
-Copyright 2020 xueyuan zhangxueyuan@ayang.com
-Copyright 2021 GitHub noreply@github.com
-Copyright 2021 Tao Wen taowen@chengfayun.com
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -1729,8 +1718,8 @@ Copyright 2016 Docker, Inc.
 Copyright 2017 Docker, Inc.
 Copyright 2019, 2020 OCI Contributors
 Copyright 2020, 2020 OCI Contributors
-Copyright Â© 2016 Docker, Inc.
-Copyright Â© 2019, 2020 OCI Contributors
+Copyright © 2016 Docker, Inc.
+Copyright © 2019, 2020 OCI Contributors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -1780,11 +1769,11 @@ SPDX:Apache-2.0
 
 == Copyright
 Copyright (c) 2013, The Prometheus Authors
-Copyright (c) 2015 BjÃ¶rn Rabenstein
+Copyright (c) 2015 Björn Rabenstein
 Copyright 2010 The Go Authors
 Copyright 2012-2015 The Prometheus Authors
 Copyright 2013 Matt T. Proud
-Copyright 2013-2015 Blake Mizerany, BjÃ¶rn Rabenstein
+Copyright 2013-2015 Blake Mizerany, Björn Rabenstein
 Copyright 2014 The Prometheus Authors
 Copyright 2015 The Prometheus Authors
 Copyright 2016 The Prometheus Authors
@@ -1808,7 +1797,7 @@ The following components are included in this product:
 
 perks - a fork of https://github.com/bmizerany/perks
 https://github.com/beorn7/perks
-Copyright 2013-2015 Blake Mizerany, BjÃ¶rn Rabenstein
+Copyright 2013-2015 Blake Mizerany, Björn Rabenstein
 See https://github.com/beorn7/perks/blob/master/README.md for license details.
 
 Go support for Protocol Buffers - Google's data interchange format
@@ -1949,8 +1938,8 @@ github.com/russross/blackfriday/v2
 SPDX:BSD-2-Clause
 
 == Copyright
-Copyright Â© 2011 Russ Ross
-Copyright Â© 2011 Russ Ross <russ@russross.com>.
+Copyright © 2011 Russ Ross
+Copyright © 2011 Russ Ross <russ@russross.com>.
 
 --------------------------------- (separator) ----------------------------------
 
@@ -1988,7 +1977,7 @@ SPDX:MIT
 == Copyright
 Copyright (c) 2014 Steve Francia
 Copyright 2011 The Go Authors. All rights reserved.
-Copyright Â© 2014 Steve Francia <spf@spf13.com>.
+Copyright © 2014 Steve Francia <spf@spf13.com>.
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2064,7 +2053,7 @@ github.com/xlab/treeprint
 SPDX:MIT
 
 == Copyright
-Copyright Â© 2016 Maxim Kupriianov <max@kc.vc>
+Copyright © 2016 Maxim Kupriianov <max@kc.vc>
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2075,7 +2064,7 @@ go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp
 SPDX:Apache-2.0
 
 == Copyright
-Copyright The OpenTelemetry Authors, @MrAlias @pellared @dashpole @XSAM @dmathieu
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2086,7 +2075,7 @@ go.opentelemetry.io/otel
 SPDX:Apache-2.0
 
 == Copyright
-Copyright The OpenTelemetry Authors, @MrAlias @pellared @dashpole @XSAM @dmathieu
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2097,7 +2086,7 @@ go.opentelemetry.io/otel/metric
 SPDX:Apache-2.0
 
 == Copyright
-Copyright The OpenTelemetry Authors
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2108,7 +2097,7 @@ go.opentelemetry.io/otel/trace
 SPDX:Apache-2.0
 
 == Copyright
-Copyright The OpenTelemetry Authors
+(no copyright notices found)
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2799,7 +2788,7 @@ gopkg.in/inf.v0
 SPDX:BSD-3-Clause--modified-by-Google
 
 == Copyright
-Copyright (c) 2012 PÃ©ter SurÃ¡nyi. Portions Copyright (c) 2009 The Go
+Copyright (c) 2012 Péter Surányi. Portions Copyright (c) 2009 The Go
 
 --------------------------------- (separator) ----------------------------------
 
@@ -4393,6 +4382,5 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
 
 This Source Code Form is "Incompatible With Secondary Licenses", as defined by
 the Mozilla Public License, v. 2.0.
-
 
 
