@@ -1232,7 +1232,7 @@ func StartHeadlampServer(config *HeadlampConfig) {
 	addr := fmt.Sprintf("%s:%d", config.ListenAddr, config.Port)
 
 	// Start server
-	if config.useInCluster {
+	if config.UseInCluster {
 		//nolint:gosec
 		err = http.ListenAndServeTLS(addr, config.tlsCert, config.tlsKey, handler)
 	} else {
@@ -1316,7 +1316,7 @@ func getHelmHandler(c *HeadlampConfig, w http.ResponseWriter, r *http.Request) (
 // This check is to prevent access except for from the app.
 // The app sets HEADLAMP_BACKEND_TOKEN, and gives the token to the frontend.
 func (c *HeadlampConfig) checkHeadlampBackendToken(w http.ResponseWriter, r *http.Request) error {
-	if c.useInCluster {
+	if c.UseInCluster {
 		return nil
 	}
 
@@ -1336,7 +1336,7 @@ func (c *HeadlampConfig) checkHeadlampBackendToken(w http.ResponseWriter, r *htt
 func handleClusterServiceProxy(c *HeadlampConfig, router *mux.Router) {
 	router.HandleFunc("/clusters/{clusterName}/serviceproxy/{namespace}/{name}",
 		func(w http.ResponseWriter, r *http.Request) {
-			serviceproxy.RequestHandler(c.kubeConfigStore, w, r)
+			serviceproxy.RequestHandler(c.KubeConfigStore, w, r)
 		}).Queries("request", "{request}")
 }
 
