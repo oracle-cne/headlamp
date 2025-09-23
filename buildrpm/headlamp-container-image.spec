@@ -36,7 +36,7 @@ Headlamp is an easy-to-use and extensible Kubernetes web UI.
 yum clean all
 yumdownloader --destdir=${PWD}/rpms %{rpm_name}
 
-docker build --pull \
+docker build --pull=never --squash \
     --build-arg https_proxy=${https_proxy} \
     -t %{docker_tag} -f ./olm/builds/Dockerfile .
 docker save -o %{app_name}.tar %{docker_tag}
