@@ -1152,10 +1152,13 @@ func getHelmHandler(c *HeadlampConfig, w http.ResponseWriter, r *http.Request) (
 		return nil, errors.New("not found")
 	}
 
-        tokenFromCookie, err := auth.GetTokenFromCookie(r, clusterName)
-        if err == nil && tokenFromCookie != "" {
-            r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", tokenFromCookie))
-        }
+	tokenFromCookie, err := auth.GetTokenFromCookie(r, clusterName)
+	logger.Log(
+		logger.LevelError, map[string]string{"clusterName": clusterName},
+		err, "DEBUG helmHandler tokenfromCookie:"+tokenFromCookie)
+	if err == nil && tokenFromCookie != "" {
+		r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", tokenFromCookie))
+	}
 	// When the request contains bearer token, set that to AuthInfo, which will be used asAdd commentMore actions
 	// bearer token for authentication to the Kubernetes cluster
 	bearerToken := r.Header.Get("Authorization")
@@ -1370,6 +1373,8 @@ func clusterRequestHandler(c *HeadlampConfig) http.Handler { //nolint:funlen
 		r.URL.Scheme = clusterURL.Scheme
 
 		token, err := auth.GetTokenFromCookie(r, mux.Vars(r)["clusterName"])
+		logger.Log(logger.LevelError, map[string]string{"clusterName": mux.Vars(r)["clusterName"]},
+			err, "DEBUG clusterRequestHdls tokenfromCookie:"+token)
 		if err == nil && token != "" {
 			r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
 		}

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/kubernetes-sigs/headlamp/backend/pkg/auth"
 	"github.com/kubernetes-sigs/headlamp/backend/pkg/kubeconfig"
 	"github.com/kubernetes-sigs/headlamp/backend/pkg/logger"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -16,7 +17,10 @@ func RequestHandler(kubeConfigStore kubeconfig.ContextStore, w http.ResponseWrit
 	name := mux.Vars(r)["name"]
 	namespace := mux.Vars(r)["namespace"]
 	requestURI := r.URL.Query().Get("request")
-
+	clusterName := mux.Vars(r)["clusterName"]
+	tmpToken, err := auth.GetTokenFromCookie(r, clusterName)
+	logger.Log(logger.LevelError, nil, err, "DEBUG srvcprox/RequestHandler tmpToken:"+tmpToken)
+	logger.Log(logger.LevelError, nil, map[string]string{"name": name, "namespace": namespace, "request": requestURI}, "DEBUG srvcprox/RequestHandler tokenFromCookie:"+tokenFromCookie)
 	// Disable caching
 	w.Header().Set("Cache-Control", "no-cache, private, max-age=0")
 	w.Header().Set("Expires", time.Unix(0, 0).Format(http.TimeFormat))
@@ -32,8 +36,11 @@ func RequestHandler(kubeConfigStore kubeconfig.ContextStore, w http.ResponseWrit
 		return
 	}
 
+	tokenFromCookie, err := auth.GetTokenFromCookie(r, clusterName)
+	logger.Log(logger.LevelError, nil, err, "DEBUG srvcprox/RequestHandler tokenFromCookie:"+tokenFromCookie)
 	// Get the authorization token from the header
 	authToken := r.Header.Get("Authorization")
+	logger.Log(logger.LevelError, nil, err, "DEBUG srvcprox/RequestHandler authToke:"+authToken)
 	if len(authToken) == 0 {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
