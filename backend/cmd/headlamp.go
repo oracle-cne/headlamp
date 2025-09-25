@@ -1153,7 +1153,7 @@ func getHelmHandler(c *HeadlampConfig, w http.ResponseWriter, r *http.Request) (
 	}
 
         tokenFromCookie, err := auth.GetTokenFromCookie(r, clusterName)
-        if err == nil && token != "" {
+        if err == nil && tokenFromCookie != "" {
             r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", tokenFromCookie))
         }
 	// When the request contains bearer token, set that to AuthInfo, which will be used asAdd commentMore actions
