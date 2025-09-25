@@ -1153,15 +1153,15 @@ func getHelmHandler(c *HeadlampConfig, w http.ResponseWriter, r *http.Request) (
 	}
 
 	tokenFromCookie, err := auth.GetTokenFromCookie(r, clusterName)
-	logger.Log(
-		logger.LevelError, map[string]string{"clusterName": clusterName},
-		err, "DEBUG helmHandler tokenfromCookie:"+tokenFromCookie)
-	if err == nil && tokenFromCookie != "" {
+	bearerToken := r.Header.Get("Authorization")
+	logger.Log(logger.LevelError, nil, err, "DEBUG getHlmHdlr tokenfromCookie:"+tokenFromCookie)
+	logger.Log(logger.LevelError, nil, err, "DEBUG getHlmHdlr bearer:"+bearerToken)
+	if err == nil && tokenFromCookie != "" && bearerToken == "" {
 		r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", tokenFromCookie))
 	}
 	// When the request contains bearer token, set that to AuthInfo, which will be used asAdd commentMore actions
 	// bearer token for authentication to the Kubernetes cluster
-	bearerToken := r.Header.Get("Authorization")
+	bearerToken = r.Header.Get("Authorization")
 	if bearerToken != "" {
 		reqToken := strings.TrimPrefix(bearerToken, "Bearer ")
 		if reqToken != "" {
@@ -1492,6 +1492,7 @@ func processTokenProtocol(r *http.Request, protocol, tokenPrefix string) {
 }
 
 func (c *HeadlampConfig) handleClusterRequests(router *mux.Router) {
+
 	if c.EnableHelm {
 		handleClusterHelm(c, router)
 	}

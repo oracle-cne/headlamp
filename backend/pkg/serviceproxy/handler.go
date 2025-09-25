@@ -41,6 +41,11 @@ func RequestHandler(kubeConfigStore kubeconfig.ContextStore, w http.ResponseWrit
 	// Get the authorization token from the header
 	authToken := r.Header.Get("Authorization")
 	logger.Log(logger.LevelError, nil, err, "DEBUG srvcprox/RequestHandler authToke:"+authToken)
+
+	if tokenFromCookie != "" && authToken == "" {
+		w.Header().Set("Authorization", fmt.Sprintf("Bearer %s", tokenFromCookie))
+	}
+	authToken = r.Header.Get("Authorization")
 	if len(authToken) == 0 {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
