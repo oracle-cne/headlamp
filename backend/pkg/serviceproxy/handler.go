@@ -44,7 +44,7 @@ func RequestHandler(kubeConfigStore kubeconfig.ContextStore, w http.ResponseWrit
 	logger.Log(logger.LevelError, nil, err, "DEBUG srvcprox/RequestHandler authToke:"+authToken)
 
 	if tokenFromCookie != "" && authToken == "" {
-		w.Header().Set("Authorization", fmt.Sprintf("Bearer %s", tokenFromCookie))
+		r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", tokenFromCookie))
 	}
 	authToken = r.Header.Get("Authorization")
 	if len(authToken) == 0 {
