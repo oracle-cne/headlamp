@@ -1102,7 +1102,7 @@ func StartHeadlampServer(config *HeadlampConfig) {
 	addr := fmt.Sprintf("%s:%d", config.ListenAddr, config.Port)
 
 	// Start server
-	if config.useInCluster {
+	if config.UseInCluster {
 		//nolint:gosec
 		err = http.ListenAndServeTLS(addr, config.tlsCert, config.tlsKey, handler)
 	} else {
