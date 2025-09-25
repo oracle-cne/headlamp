@@ -19,8 +19,8 @@ func RequestHandler(kubeConfigStore kubeconfig.ContextStore, w http.ResponseWrit
 	requestURI := r.URL.Query().Get("request")
 	clusterName := mux.Vars(r)["clusterName"]
 	tmpToken, err := auth.GetTokenFromCookie(r, clusterName)
-	logger.Log(logger.LevelError, nil, err, "DEBUG srvcprox/RequestHandler tmpToken:"+tmpToken)
-	logger.Log(logger.LevelError, nil, map[string]string{"name": name, "namespace": namespace, "request": requestURI}, "DEBUG srvcprox/RequestHandler tokenFromCookie:"+tokenFromCookie)
+	logger.Log(logger.LevelError, nil, err, "DEBUG srvcprox/RequestHandler tmpTokenfromCook:"+tmpToken)
+	logger.Log(logger.LevelError, nil, map[string]string{"name": name, "namespace": namespace, "request": requestURI}, "DEBUG srvcprox/RequestHandler tokenFromCookie:"+tmpToken)
 	// Disable caching
 	w.Header().Set("Cache-Control", "no-cache, private, max-age=0")
 	w.Header().Set("Expires", time.Unix(0, 0).Format(http.TimeFormat))
