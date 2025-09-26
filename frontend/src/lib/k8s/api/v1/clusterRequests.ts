@@ -163,9 +163,11 @@ export async function clusterRequest(
     credentials: 'include' as RequestCredentials,
     ...opts,
   };
+
   if (isBackstage()) {
     requestData.headers = addBackstageAuthHeaders(requestData.headers);
   }
+   console.error("DEBUG clusterReq url:", url, "rqData:",requestData)
   let response: Response = new Response(undefined, { status: 502, statusText: 'Unreachable' });
   try {
     response = await fetch(url, requestData);

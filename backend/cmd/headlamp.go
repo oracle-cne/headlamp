@@ -1154,8 +1154,7 @@ func getHelmHandler(c *HeadlampConfig, w http.ResponseWriter, r *http.Request) (
 
 	tokenFromCookie, err := auth.GetTokenFromCookie(r, clusterName)
 	bearerToken := r.Header.Get("Authorization")
-	logger.Log(logger.LevelError, nil, err, "DEBUG getHlmHdlr tokenfromCookie:"+tokenFromCookie)
-	logger.Log(logger.LevelError, nil, err, "DEBUG getHlmHdlr bearer:"+bearerToken)
+	logger.Log(logger.LevelError, nil, err, "DEBUG getHlmHdlr r.URL:"+r.URL.String())
 	if err == nil && tokenFromCookie != "" && bearerToken == "" {
 		r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", tokenFromCookie))
 	}
@@ -1215,6 +1214,7 @@ func handleClusterServiceProxy(c *HeadlampConfig, router *mux.Router) {
 		func(w http.ResponseWriter, r *http.Request) {
 			serviceproxy.RequestHandler(c.KubeConfigStore, w, r)
 		}).Queries("request", "{request}")
+	logger.Log(logger.LevelError, nil, nil, "DEBUG handleClusterServiceProxy ending")
 }
 
 //nolint:funlen
@@ -1373,8 +1373,6 @@ func clusterRequestHandler(c *HeadlampConfig) http.Handler { //nolint:funlen
 		r.URL.Scheme = clusterURL.Scheme
 
 		token, err := auth.GetTokenFromCookie(r, mux.Vars(r)["clusterName"])
-		logger.Log(logger.LevelError, map[string]string{"clusterName": mux.Vars(r)["clusterName"]},
-			err, "DEBUG clusterRequestHdls tokenfromCookie:"+token)
 		if err == nil && token != "" {
 			r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
 		}
@@ -1492,7 +1490,7 @@ func processTokenProtocol(r *http.Request, protocol, tokenPrefix string) {
 }
 
 func (c *HeadlampConfig) handleClusterRequests(router *mux.Router) {
-
+	logger.Log(logger.LevelError, nil, nil, "DEBUG handleClusterRequests ")
 	if c.EnableHelm {
 		handleClusterHelm(c, router)
 	}
