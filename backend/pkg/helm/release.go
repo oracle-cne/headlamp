@@ -611,10 +611,9 @@ func (h *Handler) installRelease(req InstallRequest) {
 		logger.Log(logger.LevelError, map[string]string{"chart": req.Chart, "releaseName": req.Name}, err, "getting chart")
 		return
 	}
-	logger.Log(logger.LevelInfo, map[string]string{"chart": req.Chart, "releaseName": req.Name}, err, "MADEBUG getting chart"+review.String())
 
 	user := review.Status.UserInfo.Username
-	if user == "" {
+	if user == "" || user == "system:anonymous" {
 		logger.Log(logger.LevelError, map[string]string{"chart": req.Chart, "releaseName": req.Name},
 			errors.New("insufficient privileges"), "getting chart: user is not authorized to perform this operation")
 		return

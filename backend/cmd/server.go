@@ -101,7 +101,7 @@ func createHeadlampConfig(conf *config.Config) *HeadlampConfig {
 			SamplingRate:       conf.SamplingRate,
 		},
 		tlsCert: conf.TLSCert,
-		tlsKey: conf.TLSKey,
+		tlsKey:  conf.TLSKey,
 	}
 
 	if conf.OidcCAFile != "" {

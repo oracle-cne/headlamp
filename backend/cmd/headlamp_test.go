@@ -1114,12 +1114,14 @@ func TestStartHeadlampServerTLS(t *testing.T) {
 	defer os.RemoveAll(tempDir)
 
 	config := &HeadlampConfig{
-		port:            8081,
-		cache:           cache.New[interface{}](),
-		kubeConfigStore: kubeconfig.NewContextStore(),
-		pluginDir:       tempDir,
-		tlsCert:         "headlamp_testdata/headlamp.crt",
-		tlsKey:          "headlamp_testdata/headlamp.key",
+		HeadlampCFG: &headlampconfig.HeadlampCFG{
+			KubeConfigStore: kubeconfig.NewContextStore(),
+			PluginDir:       tempDir,
+		},
+		cache: cache.New[interface{}](),
+
+		tlsCert: "headlamp_testdata/headlamp.crt",
+		tlsKey:  "headlamp_testdata/headlamp.key",
 	}
 
 	// Use a channel to signal when the server is ready
