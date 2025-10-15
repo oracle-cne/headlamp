@@ -93,10 +93,7 @@ config:
       name: ""
   # -- directory to look for plugins
   pluginsDir: "/headlamp/plugins"
-  enableHelm: false
   watchPlugins: false
-  tlsCert: "/headlamp-cert/headlamp-ca.crt"
-  tlsKey: "/headlamp-cert/headlamp-tls.key"
   # Extra arguments that can be given to the container. See charts/headlamp/README.md for more information.
   extraArgs: []
 
@@ -155,7 +152,7 @@ service:
   # -- Kubernetes Service type
   type: ClusterIP
   # -- Kubernetes Service port
-  port: 443
+  port: 80
   # -- Kubernetes Service clusterIP
   clusterIP: ""
   # -- Kubernetes Service loadBalancerIP
@@ -166,21 +163,10 @@ service:
   nodePort: null
 
 # -- Headlamp containers volume mounts
-volumeMounts:
-  - name: "ui-cert"
-    mountPath: "/headlamp-cert"
-
+volumeMounts: []
 
 # -- Headlamp pod's volumes
-volumes:
-  - name: "ui-cert"
-    secret:
-      secretName: "ui-tls"
-      items:
-        - key: "tls.crt"
-          path: "headlamp-ca.crt"
-        - key: "tls.key"
-          path: "headlamp-tls.key"
+volumes: []
 
 persistentVolumeClaim:
   # -- Enable Persistent Volume Claim

@@ -43,10 +43,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	auth "github.com/kubernetes-sigs/headlamp/backend/pkg/auth"
+	"github.com/kubernetes-sigs/headlamp/backend/pkg/auth"
 	"github.com/kubernetes-sigs/headlamp/backend/pkg/cache"
 	cfg "github.com/kubernetes-sigs/headlamp/backend/pkg/config"
-	"github.com/kubernetes-sigs/headlamp/backend/pkg/serviceproxy"
 
 	headlampcfg "github.com/kubernetes-sigs/headlamp/backend/pkg/headlampconfig"
 	"github.com/kubernetes-sigs/headlamp/backend/pkg/helm"
@@ -84,8 +83,6 @@ type HeadlampConfig struct {
 	telemetryConfig           cfg.Config
 	oidcScopes                []string
 	telemetryHandler          *telemetry.RequestHandler
-	tlsCert                   string
-	tlsKey                    string
 }
 
 const DrainNodeCacheTTL = 20 // seconds
@@ -333,7 +330,7 @@ func addPluginDeleteRoute(config *HeadlampConfig, r *mux.Router) {
 
 		logger.Log(logger.LevelInfo, nil, nil, "Received DELETE request for plugin: "+mux.Vars(r)["name"])
 
-		if err := config.checkHeadlampBackendToken(w, r); err != nil {
+		if err := checkHeadlampBackendToken(w, r); err != nil {
 			config.telemetryHandler.RecordError(span, err, " Invalid backend token")
 			logger.Log(logger.LevelWarn, nil, err, "Invalid backend token for DELETE /plugins/{name}")
 			return
@@ -661,11 +658,8 @@ func createHeadlampHandler(config *HeadlampConfig) http.Handler {
 
 		oidcAuthConfig, err := kContext.OidcConfig()
 		if err != nil {
-			// Avoid the noise in the pod log while accessing Headlamp using Service Token
-			if config.oidcIdpIssuerURL != "" {
-				logger.Log(logger.LevelError, map[string]string{"cluster": cluster},
-					err, "failed to get oidc config")
-			}
+			logger.Log(logger.LevelError, map[string]string{"cluster": cluster},
+				err, "failed to get oidc config")
 
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -1232,13 +1226,7 @@ func StartHeadlampServer(config *HeadlampConfig) {
 	addr := fmt.Sprintf("%s:%d", config.ListenAddr, config.Port)
 
 	// Start server
-	if config.UseInCluster {
-		//nolint:gosec
-		err = http.ListenAndServeTLS(addr, config.tlsCert, config.tlsKey, handler)
-	} else {
-		err = http.ListenAndServe(addr, handler) //nolint:gosec
-	}
-	if err != nil { //nolint:gosec
+	if err := http.ListenAndServe(addr, handler); err != nil { //nolint:gosec
 		logger.Log(logger.LevelError, nil, err, "Failed to start server")
 
 		HandleServerStartError(&err)
@@ -1282,21 +1270,6 @@ func getHelmHandler(c *HeadlampConfig, w http.ResponseWriter, r *http.Request) (
 		return nil, errors.New("not found")
 	}
 
-	tokenFromCookie, err := auth.GetTokenFromCookie(r, clusterName)
-	bearerToken := r.Header.Get("Authorization")
-	if err == nil && tokenFromCookie != "" && bearerToken == "" {
-		r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", tokenFromCookie))
-	}
-	// When the request contains bearer token, set that to AuthInfo, which will be used asAdd commentMore actions
-	// bearer token for authentication to the Kubernetes cluster
-	bearerToken = r.Header.Get("Authorization")
-	if bearerToken != "" {
-		reqToken := strings.TrimPrefix(bearerToken, "Bearer ")
-		if reqToken != "" {
-			context.AuthInfo.Token = reqToken
-		}
-	}
-
 	namespace := r.URL.Query().Get("namespace")
 
 	helmHandler, err := helm.NewHandler(context.ClientConfig(), c.cache, namespace)
@@ -1320,11 +1293,7 @@ func getHelmHandler(c *HeadlampConfig, w http.ResponseWriter, r *http.Request) (
 // Check request for header "X-HEADLAMP_BACKEND-TOKEN" matches HEADLAMP_BACKEND_TOKEN env
 // This check is to prevent access except for from the app.
 // The app sets HEADLAMP_BACKEND_TOKEN, and gives the token to the frontend.
-func (c *HeadlampConfig) checkHeadlampBackendToken(w http.ResponseWriter, r *http.Request) error {
-	if c.UseInCluster {
-		return nil
-	}
-
+func checkHeadlampBackendToken(w http.ResponseWriter, r *http.Request) error {
 	backendToken := r.Header.Get("X-HEADLAMP_BACKEND-TOKEN")
 	backendTokenEnv := os.Getenv("HEADLAMP_BACKEND_TOKEN")
 
@@ -1334,15 +1303,6 @@ func (c *HeadlampConfig) checkHeadlampBackendToken(w http.ResponseWriter, r *htt
 	}
 
 	return nil
-}
-
-// handleClusterServiceProxy registers a new route for the path serviceproxy/{namespace}/{name}Add commentMore actions
-// to proxy requests to in-cluster services.
-func handleClusterServiceProxy(c *HeadlampConfig, router *mux.Router) {
-	router.HandleFunc("/clusters/{clusterName}/serviceproxy/{namespace}/{name}",
-		func(w http.ResponseWriter, r *http.Request) {
-			serviceproxy.RequestHandler(c.KubeConfigStore, w, r)
-		}).Queries("request", "{request}")
 }
 
 //nolint:funlen
@@ -1360,7 +1320,7 @@ func handleClusterHelm(c *HeadlampConfig, router *mux.Router) {
 
 		c.telemetryHandler.RecordRequestCount(ctx, r, attribute.String("cluster", clusterName))
 
-		if err := c.checkHeadlampBackendToken(w, r); err != nil {
+		if err := checkHeadlampBackendToken(w, r); err != nil {
 			c.handleError(w, ctx, span, err, "failed to check headlamp backend token", http.StatusForbidden)
 
 			return
@@ -1622,7 +1582,6 @@ func (c *HeadlampConfig) handleClusterRequests(router *mux.Router) {
 		handleClusterHelm(c, router)
 	}
 
-	handleClusterServiceProxy(c, router)
 	handleClusterAPI(c, router)
 }
 
@@ -1793,7 +1752,7 @@ func (c *HeadlampConfig) addCluster(w http.ResponseWriter, r *http.Request) {
 	defer recordRequestCompletion(c, ctx, start, r)
 	c.telemetryHandler.RecordRequestCount(ctx, r)
 
-	if err := c.checkHeadlampBackendToken(w, r); err != nil {
+	if err := checkHeadlampBackendToken(w, r); err != nil {
 		c.telemetryHandler.RecordError(span, err, "invalid backend token")
 		c.telemetryHandler.RecordErrorCount(ctx, attribute.String("error.type", "invalid token"))
 		logger.Log(logger.LevelError, nil, err, "invalid token")
@@ -2001,7 +1960,7 @@ func (c *HeadlampConfig) deleteCluster(w http.ResponseWriter, r *http.Request) {
 
 	name := mux.Vars(r)["name"]
 
-	if err := c.checkHeadlampBackendToken(w, r); err != nil {
+	if err := checkHeadlampBackendToken(w, r); err != nil {
 		c.telemetryHandler.RecordError(span, err, "invalid backend token")
 		c.telemetryHandler.RecordErrorCount(ctx, attribute.String("error.type", "invalid_token"))
 		logger.Log(logger.LevelError, nil, err, "invalid token")
