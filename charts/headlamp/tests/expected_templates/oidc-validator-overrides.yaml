@@ -4,7 +4,6 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: headlamp
-  namespace: default
   labels:
     helm.sh/chart: headlamp-0.34.0
     app.kubernetes.io/name: headlamp
@@ -37,7 +36,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: headlamp
-  namespace: default
   labels:
     helm.sh/chart: headlamp-0.34.0
     app.kubernetes.io/name: headlamp
@@ -48,10 +46,10 @@ spec:
   type: ClusterIP
   
   ports:
-    - port: 443
-      targetPort: https
+    - port: 80
+      targetPort: http
       protocol: TCP
-      name: https
+      name: http
   selector:
     app.kubernetes.io/name: headlamp
     app.kubernetes.io/instance: headlamp
@@ -64,7 +62,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: headlamp
-  namespace: default
   labels:
     helm.sh/chart: headlamp-0.34.0
     app.kubernetes.io/name: headlamp
@@ -131,18 +128,16 @@ spec:
             # Check if useAccessToken is non false either from env or oidc.config
             - "-oidc-use-access-token=$(OIDC_USE_ACCESS_TOKEN)"
           ports:
-            - name: https
+            - name: http
               containerPort: 4466
               protocol: TCP
           livenessProbe:
             httpGet:
               path: "/"
-              port: https
-              scheme: HTTPS
+              port: http
           readinessProbe:
             httpGet:
               path: "/"
-              port: https
-              scheme: HTTPS
+              port: http
           resources:
             {}
