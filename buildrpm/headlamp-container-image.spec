@@ -10,7 +10,7 @@
 %global app_name               headlamp
 %global img_name               ui
 %global app_version            0.35.0
-%global oracle_release_version 1
+%global oracle_release_version 2
 %global _buildhost             build-ol%{?oraclelinux}-%{?_arch}.oracle.com
 
 Name:           %{app_name}-container-image
@@ -49,5 +49,8 @@ docker save -o %{app_name}.tar %{docker_tag}
 /usr/local/share/olcne/%{app_name}.tar
 
 %changelog
+* Mon Nov 03 2025 Daniel Krasinski <daniel.krasinski@oracle.com> - 0.35.0-2
+- Rebuild with latest base image
+
 * Tue Sep 16 2025 Olcne-Builder Jenkins <olcne-builder_us@oracle.com> - 0.35.0-1
 - Added Oracle specific build files for Headlamp.
