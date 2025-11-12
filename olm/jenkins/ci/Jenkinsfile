@@ -1,0 +1,16 @@
+@Library('olcne-pipeline') _
+import com.oracle.olcne.pipeline.BranchPattern
+
+String version = '0.38.0'
+String imgTag  = "v" + version
+
+olcnePipeline(
+        branchPattern: new BranchPattern(master: 'oracle/release/.*', feature: '(?!^oracle/release/$)(^.*$)'),
+        containers: [('container-registry.oracle.com/olcne/ui:' + imgTag): 'olcne/headlamp:' + imgTag],
+        platforms: ['ol8'],
+        architectures: ['x86_64', 'aarch64'],
+        publishImage: false,
+        yumOL8Repos: ['ol8_appstream'],
+        ol8ModulesToDisable: ['go-toolset:ol8'],
+        ol8ModulesToEnable: ['nodejs:20'],
+)
