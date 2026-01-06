@@ -15,8 +15,8 @@ index 0ec8cd5e5..8a2b430bd 100644
        },
      },
      typography: {
--      fontFamily: ['Overpass', 'sans-serif'].join(', '),
-+      fontFamily: ['Oracle Sans', 'sans-serif'].join(', '),
+-      fontFamily: currentTheme.fontFamily?.join(', ') ?? ['Overpass', 'sans-serif'].join(', '),
++      fontFamily: currentTheme.fontFamily?.join(', ') ?? ['Oracle Sans', 'sans-serif'].join(', '),
        h1: {
          fontWeight: 700,
          fontSize: '1.87rem',
