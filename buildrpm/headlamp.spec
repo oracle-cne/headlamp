@@ -24,7 +24,11 @@ BuildRequires:	nodejs >= 18.14
 BuildRequires:	make
 Patch0:         AppLogo.tsx.patch
 Patch1:         Auth.tsx.patch
+{{{- if semverCompare ">=0.36.0" $version }}}
+Patch2:         themes.ts_v0.36.0_onwards.patch
+{{{- else }}}
 Patch2:         themes.ts.patch
+{{{- end }}}
 
 %description
 Headlamp is an easy-to-use and extensible Kubernetes web UI.
