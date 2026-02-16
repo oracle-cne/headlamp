@@ -1,8 +1,8 @@
 diff --git frontend/src/components/account/Auth.tsx frontend/src/components/account/Auth.tsx
-index 729a11e3e..d04870bd5 100644
+index b4134c4e0..65153c43e 100644
 --- frontend/src/components/account/Auth.tsx
 +++ frontend/src/components/account/Auth.tsx
-@@ -33,6 +33,7 @@ import { ApiError, testAuth } from '../../lib/k8s/apiProxy';
+@@ -34,6 +34,7 @@ import { ApiError } from '../../lib/k8s/api/v2/ApiError';
  import { ClusterDialog } from '../cluster/Chooser';
  import { DialogTitle } from '../common/Dialog';
  import HeadlampLink from '../common/Link';
@@ -10,7 +10,7 @@ index 729a11e3e..d04870bd5 100644
  
  export default function AuthToken() {
    const history = useHistory();
-@@ -125,6 +126,14 @@ export function PureAuthToken({
+@@ -129,6 +130,14 @@ export function PureAuthToken({
    }
  
    return (
@@ -25,7 +25,7 @@ index 729a11e3e..d04870bd5 100644
      <Box component="main">
        <ClusterDialog useCover onClose={onClose} aria-labelledby="authtoken-dialog-title">
          <DialogTitle id="authtoken-dialog-title">{title}</DialogTitle>
-@@ -196,6 +205,7 @@ export function PureAuthToken({
+@@ -200,6 +209,7 @@ export function PureAuthToken({
          message={<span id="message-id">{t('translation|Error authenticating')}</span>}
        />
      </Box>
