@@ -6,7 +6,7 @@ String imgTag  = "v" + version
 
 olcnePipeline(
         branchPattern: new BranchPattern(master: 'oracle/release/.*', feature: '(?!^oracle/release/$)(^.*$)'),
-        containers: [('container-registry.oracle.com/olcne/ui:' + imgTag): 'olcne/headlamp:' + imgTag],
+        containers: [('container-registry.oracle.com/olcne/ui:' + imgTag): 'olcne/ui:' + imgTag],
         platforms: ['ol8'],
         architectures: ['x86_64', 'aarch64'],
         publishImage: false,
