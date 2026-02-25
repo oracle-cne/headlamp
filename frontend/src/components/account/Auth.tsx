@@ -57,6 +57,7 @@ export default function AuthToken() {
             })
           );
         }
+        window.location.reload();
       } else {
         setToken('');
         setShowError(true);
