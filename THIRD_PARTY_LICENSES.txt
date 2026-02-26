@@ -8,7 +8,7 @@ Copyright 2018 The Kubernetes Authors.
 Copyright 2025 The Kubernetes Authors.
 
 ----------------------------------- Notices ------------------------------------
-When donating the Headlamp project to the CNCF, not all contributors were reached
+When donating the karpenter-core project to the CNCF, not all contributors were reached
 to sign the CNCF CLA prior to donation. As such, according to the CNCF rules to donate a repository,
 we must add a NOTICE referencing section 7 of the CLA with a list of developers who could not be reached.
 
@@ -217,17 +217,6 @@ Copyright 2020 ChaiShushan <chaishushan{AT}gmail.com>. All rights reserved.
 --------------------------------- (separator) ----------------------------------
 
 == Dependency
-github.com/cli/browser
-
-== License Type
-SPDX:BSD-2-Clause
-
-== Copyright
-Copyright (c) 2014, Dave Cheney <dave@cheney.net>
-
---------------------------------- (separator) ----------------------------------
-
-== Dependency
 github.com/containerd/containerd
 
 == License Type
@@ -274,7 +263,7 @@ github.com/containerd/errdefs
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The containerd Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -285,7 +274,7 @@ github.com/containerd/log
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The containerd Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -296,7 +285,7 @@ github.com/containerd/platforms
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The containerd Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -907,7 +896,7 @@ github.com/hashicorp/errwrap
 SPDX:MPL-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright (c) 2014 HashiCorp, Inc.
 
 --------------------------------- (separator) ----------------------------------
 
@@ -918,7 +907,7 @@ github.com/hashicorp/go-multierror
 SPDX:MPL-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright (c) 2014 HashiCorp, Inc.
 
 --------------------------------- (separator) ----------------------------------
 
@@ -931,17 +920,6 @@ SPDX:MIT
 == Copyright
 Copyright (c) 2015 Huan Du
 Copyright 2015 Huan Du. All rights reserved.
-
---------------------------------- (separator) ----------------------------------
-
-== Dependency
-github.com/jmespath/go-jmespath
-
-== License Type
-SPDX:Apache-2.0
-
-== Copyright
-Copyright 2015 James Saryerwinnie
 
 --------------------------------- (separator) ----------------------------------
 
@@ -1540,7 +1518,9 @@ github.com/modern-go/concurrent
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright 2018 GitHub noreply@github.com
+Copyright 2018 Tao Wen taowen@gmail.com
+Copyright 2018 kr1sten0 zhqy0807@gmail.com
 
 --------------------------------- (separator) ----------------------------------
 
@@ -1551,7 +1531,16 @@ github.com/modern-go/reflect2
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright 2018 GitHub noreply@github.com
+Copyright 2018 Justin Santa Barbara justinsb@google.com
+Copyright 2018 Tao Wen taowen@gmail.com
+Copyright 2018 nextzhou nextzhou@gmail.com
+Copyright 2020 Aaron Simmons paleozogt@gmail.com
+Copyright 2020 GitHub noreply@github.com
+Copyright 2020 Mikko Ylinen mikko.ylinen@intel.com
+Copyright 2020 xueyuan zhangxueyuan@ayang.com
+Copyright 2021 GitHub noreply@github.com
+Copyright 2021 Tao Wen taowen@chengfayun.com
 
 --------------------------------- (separator) ----------------------------------
 
@@ -1891,7 +1880,11 @@ github.com/santhosh-tekuri/jsonschema/v6
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright 2026 to santhosh.tekuri@gmail.com
+Copyright 2026 to vnykmshr 
+Copyright 2026 to ernstwi
+Copyright 2026 to Brandon Bennett brandon@brbe.me
+Copyright 2026 to Benoit Tigeot
 
 --------------------------------- (separator) ----------------------------------
 
@@ -1989,7 +1982,7 @@ go.opentelemetry.io/auto/sdk
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2000,7 +1993,7 @@ go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors, @MrAlias @pellared @dashpole @XSAM @dmathieu
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2011,7 +2004,7 @@ go.opentelemetry.io/otel
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors, @MrAlias @pellared @dashpole @XSAM @dmathieu
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2022,7 +2015,7 @@ go.opentelemetry.io/otel/exporters/otlp/otlptrace
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2033,7 +2026,7 @@ go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2044,7 +2037,7 @@ go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2055,7 +2048,7 @@ go.opentelemetry.io/otel/exporters/prometheus
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2066,7 +2059,7 @@ go.opentelemetry.io/otel/exporters/stdout/stdouttrace
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2077,7 +2070,7 @@ go.opentelemetry.io/otel/metric
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2088,7 +2081,7 @@ go.opentelemetry.io/otel/sdk
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2099,7 +2092,7 @@ go.opentelemetry.io/otel/sdk/metric
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors
 
 --------------------------------- (separator) ----------------------------------
 
@@ -2110,7 +2103,7 @@ go.opentelemetry.io/otel/trace
 SPDX:Apache-2.0
 
 == Copyright
-(no copyright notices found)
+Copyright The OpenTelemetry Authors
 
 --------------------------------- (separator) ----------------------------------
 
