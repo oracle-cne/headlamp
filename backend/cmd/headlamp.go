@@ -533,7 +533,6 @@ func createHeadlampHandler(config *HeadlampConfig) http.Handler {
 	r.HandleFunc("/clusters/{clusterName}/portforward", func(w http.ResponseWriter, r *http.Request) {
 		portforward.GetPortForwardByID(config.cache, w, r)
 	}).Methods("GET")
-
 	// Expose user info so the frontend can show the current user in the top bar using the per-cluster auth cookie.
 	r.HandleFunc("/clusters/{clusterName}/me",
 		auth.HandleMe(auth.MeHandlerOptions{
@@ -1264,7 +1263,6 @@ func handleClusterHelm(c *HeadlampConfig, router *mux.Router) {
 		defer span.End()
 
 		c.telemetryHandler.RecordRequestCount(ctx, r, attribute.String("cluster", clusterName))
-
 		if err := c.checkHeadlampBackendToken(w, r); err != nil {
 			c.handleError(w, ctx, span, err, "failed to check headlamp backend token", http.StatusForbidden)
 			return
@@ -1305,12 +1303,22 @@ func (c *HeadlampConfig) helmRouteReleaseHandler(
 	context = context.Copy()
 
 	// If headlamp is running in cluster, use the token from the cookie for oidc auth
-	if c.UseInCluster && context.OidcConf != nil {
+	if c.UseInCluster {
 		setTokenFromCookie(r, clusterName)
 	}
 
 	bearerToken := r.Header.Get("Authorization")
 
+	if c.UseInCluster && bearerToken == "" {
+		c.handleError(
+			w, ctx, span,
+			errors.New("no authentication token provided"),
+			"failed to get token",
+			http.StatusUnauthorized,
+		)
+
+		return
+	}
 	if bearerToken != "" {
 		// Remove "Bearer " prefix if present
 		bearerToken = strings.TrimPrefix(bearerToken, "Bearer ")
@@ -1616,7 +1624,6 @@ func (c *HeadlampConfig) handleClusterRequests(router *mux.Router) {
 	if c.EnableHelm {
 		handleClusterHelm(c, router)
 	}
-
 	handleClusterServiceProxy(c, router)
 	handleClusterAPI(c, router)
 }
@@ -2544,7 +2551,6 @@ func (c *HeadlampConfig) handleSetToken(w http.ResponseWriter, r *http.Request) 
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
-
 	// Validate cluster name is provided
 	if cluster == "" {
 		http.Error(w, "Cluster name is required", http.StatusBadRequest)
