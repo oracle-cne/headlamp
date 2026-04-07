@@ -97,7 +97,7 @@ fi
 
 for cluster_node in $cluster_nodes; do
 	podman save "${IMG_NAME}:${TAG}" | ocne cluster console --direct --node "$cluster_node" -- podman load
-	ocne cluster console --direct --node "$cluster_node" -- podman tag "${IMG_NAME}:${TAG}" "${IMG_NAME}:current"
+	echo -n "" | ocne cluster console --direct --node "$cluster_node" -- podman tag "${IMG_NAME}:${TAG}" "${IMG_NAME}:current"
 done
 
 report_test_failure() {
