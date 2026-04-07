@@ -176,7 +176,7 @@ cleanup() {
 	rm -rf "$tmpdir"
 
 	if [ "$delete_ocne_cluster" = true ]; then
-		ocne cluster delete -c "${HEADLAMP_CLUSTER_NAME}" || status=$?
+		ocne cluster delete -C "${HEADLAMP_CLUSTER_NAME}" || status=$?
 	fi
 
 	exit "$status"
