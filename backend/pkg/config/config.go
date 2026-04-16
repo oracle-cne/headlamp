@@ -150,13 +150,41 @@ func (c *Config) Validate() error {
 	return nil
 }
 
-// normalizeArgs skips the first arg for flag parsing.
+var legacyFlagAliases = map[string]string{
+	"tls-cert": "tls-cert-path",
+	"tls-key":  "tls-key-path",
+}
+
+// normalizeArgs skips the first arg for flag parsing and rewrites legacy flag aliases.
 func normalizeArgs(args []string) []string {
 	if len(args) == 0 {
 		return []string{}
 	}
 
-	return args[1:]
+	normalizedArgs := make([]string, 0, len(args)-1)
+
+	for _, arg := range args[1:] {
+		normalizedArgs = append(normalizedArgs, normalizeLegacyFlagAlias(arg))
+	}
+
+	return normalizedArgs
+}
+
+func normalizeLegacyFlagAlias(arg string) string {
+	for legacyName, canonicalName := range legacyFlagAliases {
+		for _, prefix := range []string{"-", "--"} {
+			legacyFlag := prefix + legacyName
+			if arg == legacyFlag {
+				return prefix + canonicalName
+			}
+
+			if strings.HasPrefix(arg, legacyFlag+"=") {
+				return prefix + canonicalName + strings.TrimPrefix(arg, legacyFlag)
+			}
+		}
+	}
+
+	return arg
 }
 
 // loadDefaultsFromFlags loads default flag values into koanf.

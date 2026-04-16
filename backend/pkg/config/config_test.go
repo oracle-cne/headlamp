@@ -258,6 +258,14 @@ func TestParseFlags(t *testing.T) {
 				assert.Equal(t, "warn", conf.LogLevel)
 			},
 		},
+		{
+			name: "legacy_tls_flags",
+			args: []string{"go run ./cmd", "-tls-cert=/tmp/headlamp.crt", "--tls-key=/tmp/headlamp.key"},
+			verify: func(t *testing.T, conf *config.Config) {
+				assert.Equal(t, "/tmp/headlamp.crt", conf.TLSCertPath)
+				assert.Equal(t, "/tmp/headlamp.key", conf.TLSKeyPath)
+			},
+		},
 	}
 
 	for _, tt := range tests {
