@@ -374,6 +374,14 @@ var parseFlagTests = []parseFlagTest{
 			assert.Equal(t, "/custom/token/path", conf.ServiceAccountTokenPath)
 		},
 	},
+	{
+		name: "legacy_tls_flags",
+		args: []string{"go run ./cmd", "-tls-cert=/tmp/headlamp.crt", "--tls-key=/tmp/headlamp.key"},
+		verify: func(t *testing.T, conf *config.Config) {
+			assert.Equal(t, "/tmp/headlamp.crt", conf.TLSCertPath)
+			assert.Equal(t, "/tmp/headlamp.key", conf.TLSKeyPath)
+		},
+	},
 }
 
 func TestParseFlags(t *testing.T) {
