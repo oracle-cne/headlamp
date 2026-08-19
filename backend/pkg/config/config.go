@@ -23,9 +23,11 @@ import (
 )
 
 const (
-	defaultPort       = 4466
-	defaultSessionTTL = 86400 // 24 hours in seconds
-	osWindows         = "windows"
+	defaultPort                 = 4466
+	defaultSessionTTL           = 86400 // 24 hours in seconds
+	defaultInClusterTLSCertPath = "/headlamp-cert/headlamp-ca.crt"
+	defaultInClusterTLSKeyPath  = "/headlamp-cert/headlamp-tls.key"
+	osWindows                   = "windows"
 )
 
 const (
@@ -363,6 +365,42 @@ func setKubeConfigPath(config *Config) error {
 	return nil
 }
 
+func regularFileExists(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+
+	return !info.IsDir()
+}
+
+func setInClusterTLSDefaults(config *Config) {
+	setInClusterTLSDefaultsWithFileCheck(config, regularFileExists)
+}
+
+func setInClusterTLSDefaultsWithFileCheck(config *Config, fileExists func(string) bool) {
+	if !config.InCluster || config.TLSCertPath != "" || config.TLSKeyPath != "" {
+		return
+	}
+
+	if !fileExists(defaultInClusterTLSCertPath) || !fileExists(defaultInClusterTLSKeyPath) {
+		return
+	}
+
+	config.TLSCertPath = defaultInClusterTLSCertPath
+	config.TLSKeyPath = defaultInClusterTLSKeyPath
+
+	logger.Log(
+		logger.LevelInfo,
+		map[string]string{
+			"tlsCertPath": config.TLSCertPath,
+			"tlsKeyPath":  config.TLSKeyPath,
+		},
+		nil,
+		"using default in-cluster TLS certificate paths",
+	)
+}
+
 // ApplyMeDefaults trims and applies defaults to the JMESPath expressions used for the /me endpoint.
 func ApplyMeDefaults(usernamePath, emailPath, groupsPath, userInfoURL string) (string, string, string, string) {
 	username := strings.TrimSpace(usernamePath)
@@ -451,6 +489,8 @@ func Parse(args []string) (*Config, error) {
 	if err := setKubeConfigPath(&config); err != nil {
 		return nil, err
 	}
+
+	setInClusterTLSDefaults(&config)
 
 	setMeDefaults(&config)
 
