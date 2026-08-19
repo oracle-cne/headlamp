@@ -12,5 +12,5 @@ olcnePipeline(
         publishImage: false,
         yumOL8Repos: ['ol8_appstream'],
         ol8ModulesToDisable: ['go-toolset:ol8'],
-        ol8ModulesToEnable: ['nodejs:20'],
+        ol8ModulesToEnable: ['nodejs:24'],
 )
