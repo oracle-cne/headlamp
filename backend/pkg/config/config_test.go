@@ -414,6 +414,18 @@ func TestParseFlags(t *testing.T) {
 	runParseFlagTests(t, parseFlagTests)
 }
 
+func TestParseLegacyTLSFlags(t *testing.T) {
+	conf, err := config.Parse([]string{
+		"headlamp-server",
+		"-tls-cert=/tmp/headlamp.crt",
+		"-tls-key=/tmp/headlamp.key",
+	})
+	require.NoError(t, err)
+
+	assert.Equal(t, "/tmp/headlamp.crt", conf.TLSCertPath)
+	assert.Equal(t, "/tmp/headlamp.key", conf.TLSKeyPath)
+}
+
 func runParseFlagTests(t *testing.T, tests []parseFlagTest) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

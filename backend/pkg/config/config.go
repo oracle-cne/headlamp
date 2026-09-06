@@ -23,9 +23,11 @@ import (
 )
 
 const (
-	defaultPort       = 4466
-	defaultSessionTTL = 86400 // 24 hours in seconds
-	osWindows         = "windows"
+	defaultPort                 = 4466
+	defaultSessionTTL           = 86400 // 24 hours in seconds
+	defaultInClusterTLSCertPath = "/headlamp-cert/headlamp-ca.crt"
+	defaultInClusterTLSKeyPath  = "/headlamp-cert/headlamp-tls.key"
+	osWindows                   = "windows"
 )
 
 const (
@@ -249,13 +251,39 @@ func (c *Config) validateServiceAccountTokenFlags() error {
 	return nil
 }
 
-// normalizeArgs skips the first arg for flag parsing.
+var legacyFlagAliases = map[string]string{
+	"tls-cert": "tls-cert-path",
+	"tls-key":  "tls-key-path",
+}
+
+// normalizeArgs skips the first arg for flag parsing and rewrites legacy flag aliases.
 func normalizeArgs(args []string) []string {
 	if len(args) == 0 {
 		return []string{}
 	}
 
-	return args[1:]
+	normalizedArgs := make([]string, 0, len(args)-1)
+
+	for _, arg := range args[1:] {
+		normalizedArgs = append(normalizedArgs, normalizeLegacyFlagAlias(arg))
+	}
+
+	return normalizedArgs
+}
+
+func normalizeLegacyFlagAlias(arg string) string {
+	for legacyName, canonicalName := range legacyFlagAliases {
+		legacyFlag := "-" + legacyName
+		if arg == legacyFlag {
+			return "-" + canonicalName
+		}
+
+		if strings.HasPrefix(arg, legacyFlag+"=") {
+			return "-" + canonicalName + strings.TrimPrefix(arg, legacyFlag)
+		}
+	}
+
+	return arg
 }
 
 // loadDefaultsFromFlags loads default flag values into koanf.
@@ -363,6 +391,42 @@ func setKubeConfigPath(config *Config) error {
 	return nil
 }
 
+func regularFileExists(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+
+	return !info.IsDir()
+}
+
+func setInClusterTLSDefaults(config *Config) {
+	setInClusterTLSDefaultsWithFileCheck(config, regularFileExists)
+}
+
+func setInClusterTLSDefaultsWithFileCheck(config *Config, fileExists func(string) bool) {
+	if !config.InCluster || config.TLSCertPath != "" || config.TLSKeyPath != "" {
+		return
+	}
+
+	if !fileExists(defaultInClusterTLSCertPath) || !fileExists(defaultInClusterTLSKeyPath) {
+		return
+	}
+
+	config.TLSCertPath = defaultInClusterTLSCertPath
+	config.TLSKeyPath = defaultInClusterTLSKeyPath
+
+	logger.Log(
+		logger.LevelInfo,
+		map[string]string{
+			"tlsCertPath": config.TLSCertPath,
+			"tlsKeyPath":  config.TLSKeyPath,
+		},
+		nil,
+		"using default in-cluster TLS certificate paths",
+	)
+}
+
 // ApplyMeDefaults trims and applies defaults to the JMESPath expressions used for the /me endpoint.
 func ApplyMeDefaults(usernamePath, emailPath, groupsPath, userInfoURL string) (string, string, string, string) {
 	username := strings.TrimSpace(usernamePath)
@@ -451,6 +515,8 @@ func Parse(args []string) (*Config, error) {
 	if err := setKubeConfigPath(&config); err != nil {
 		return nil, err
 	}
+
+	setInClusterTLSDefaults(&config)
 
 	setMeDefaults(&config)
 
