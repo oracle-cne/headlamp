@@ -8,7 +8,7 @@
 
 %global app_name                headlamp
 %global app_version             0.45.0
-%global oracle_release_version  1
+%global oracle_release_version  2
 %global _buildhost              build-ol%{?oraclelinux}-%{?_arch}.oracle.com
 
 Name:           %{app_name}
@@ -21,6 +21,7 @@ Url:            https://github.com/headlamp-k8s/headlamp.git
 Source:         %{name}-%{version}.tar.bz2
 BuildRequires:  golang
 BuildRequires:	nodejs >= 18.14
+BuildRequires:  npm
 BuildRequires:	make
 Patch0:         AppLogo.tsx.patch
 Patch1:         Auth.tsx.patch
@@ -57,5 +58,8 @@ cp -ap backend/headlamp-server %{buildroot}/%{app_name}/backend
 /%{app_name}/
 
 %changelog
+* Thu Oct 01 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.45.0-2
+- Require npm for the frontend build.
+
 * Sat Aug 22 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.45.0-1
 - Added Oracle specific build files for Headlamp.
