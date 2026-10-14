@@ -448,6 +448,25 @@ type parseFlagTest struct {
 	verify func(*testing.T, *config.Config)
 }
 
+func TestParseLegacyTLSFlags(t *testing.T) {
+	tests := []struct {
+		name string
+		args []string
+	}{
+		{"equals", []string{"headlamp-server", "-tls-cert=/tmp/headlamp.crt", "-tls-key=/tmp/headlamp.key"}},
+		{"separate", []string{"headlamp-server", "-tls-cert", "/tmp/headlamp.crt", "-tls-key", "/tmp/headlamp.key"}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			conf, err := config.Parse(tt.args)
+			require.NoError(t, err)
+			assert.Equal(t, "/tmp/headlamp.crt", conf.TLSCertPath)
+			assert.Equal(t, "/tmp/headlamp.key", conf.TLSKeyPath)
+		})
+	}
+}
+
 var parseFlagTests = []parseFlagTest{
 	{
 		name: "enable_dynamic_clusters",
