@@ -14,7 +14,7 @@ index e90633a15..7c83aac47 100644
 @@ -81,7 +81,7 @@ export function AppLogo(props: AppLogoProps) {
          <PluginAppLogoComp
            logoType={logoType}
-           themeName={themeName}
+           themeName={mode}
 -          sx={{ height: '32px', width: 'auto' }}
 +          sx={{ height: '66px', width: '243px' }}
          />
