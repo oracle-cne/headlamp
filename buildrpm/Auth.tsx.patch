@@ -2,14 +2,14 @@ diff --git frontend/src/components/account/Auth.tsx frontend/src/components/acco
 index 729a11e3e..d04870bd5 100644
 --- frontend/src/components/account/Auth.tsx
 +++ frontend/src/components/account/Auth.tsx
-@@ -33,6 +33,7 @@ import { ApiError, testAuth } from '../../lib/k8s/apiProxy';
- import { ClusterDialog } from '../cluster/Chooser';
- import { DialogTitle } from '../common/Dialog';
- import HeadlampLink from '../common/Link';
+@@ -19,6 +19,7 @@
+ import DialogActions from '@mui/material/DialogActions';
+ import DialogContent from '@mui/material/DialogContent';
+ import DialogContentText from '@mui/material/DialogContentText';
 +import { GlobalStyles } from '@mui/material';
- 
- export default function AuthToken() {
-   const history = useHistory();
+ import Link from '@mui/material/Link';
+ import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
+ import TextField from '@mui/material/TextField';
 @@ -125,6 +126,14 @@ export function PureAuthToken({
    }
  

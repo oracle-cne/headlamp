@@ -10,7 +10,7 @@
 %global app_name               headlamp
 %global img_name               ui
 %global app_version            0.46.0
-%global oracle_release_version 3
+%global oracle_release_version 4
 %global _buildhost             build-ol%{?oraclelinux}-%{?_arch}.oracle.com
 
 Name:           %{app_name}-container-image
@@ -49,6 +49,9 @@ docker save -o %{app_name}.tar %{docker_tag}
 /usr/local/share/olcne/%{app_name}.tar
 
 %changelog
+* Wed Nov 25 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.46.0-4
+- Rebuild with the Headlamp 0.46.0 authentication branding patch fix.
+
 * Tue Nov 24 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.46.0-3
 - Correct the RPM changelog dates.
 
