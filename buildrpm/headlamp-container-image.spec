@@ -10,7 +10,7 @@
 %global app_name               headlamp
 %global img_name               ui
 %global app_version            0.46.0
-%global oracle_release_version 2
+%global oracle_release_version 3
 %global _buildhost             build-ol%{?oraclelinux}-%{?_arch}.oracle.com
 
 Name:           %{app_name}-container-image
@@ -49,7 +49,10 @@ docker save -o %{app_name}.tar %{docker_tag}
 /usr/local/share/olcne/%{app_name}.tar
 
 %changelog
-* Thu Oct 01 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.46.0-2
+* Tue Nov 24 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.46.0-3
+- Correct the RPM changelog dates.
+
+* Tue Nov 24 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.46.0-2
 - Match the Headlamp RPM release with the npm build requirement.
 
 * Tue Nov 24 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.46.0-1

@@ -8,7 +8,7 @@
 
 %global app_name                headlamp
 %global app_version             0.46.0
-%global oracle_release_version  2
+%global oracle_release_version  3
 %global _buildhost              build-ol%{?oraclelinux}-%{?_arch}.oracle.com
 
 Name:           %{app_name}
@@ -58,7 +58,10 @@ cp -ap backend/headlamp-server %{buildroot}/%{app_name}/backend
 /%{app_name}/
 
 %changelog
-* Thu Oct 01 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.46.0-2
+* Tue Nov 24 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.46.0-3
+- Correct the RPM changelog dates.
+
+* Tue Nov 24 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.46.0-2
 - Require npm for the frontend build.
 
 * Tue Nov 24 2026 Oracle Cloud Native Environment Authors <noreply@oracle.com> - 0.46.0-1
